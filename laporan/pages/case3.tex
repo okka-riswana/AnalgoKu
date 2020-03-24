@@ -1,0 +1,73 @@
+\section{Insertion Sort}
+
+\Problem Tentukan $T(n)$ dari rekurensi (pengulangan) insertion sort berdasarkan penentuan rekurensi divide \& conquer:
+
+\begin{align*}
+    T(n) =
+        \begin{cases}
+            \Theta(1),                      & \text{if } n \leq c \\
+            aT(\frac{n}{b}) + D(n) + C(n)   & \text{otherwise}
+        \end{cases}
+\end{align*}
+
+\TheSolution
+Diberikan,
+
+\begin{itemize}
+    \item \textbf{Divide}: untuk membagi data membutuhkan $\Theta(1)$.
+    \item \textbf{Conquer}: Setiap rekursi membutuhkan biaya $O(n)$ untuk mencari elemen yang dipilih untuk ditukar. $T(n - 1)$ dibutuhkan untuk menyelesaikan 1 \textit{sub-problem} dengan ukuran $n - 1$.
+    \item \textbf{Combine}: karena data hanya dibagi 1 maka tidak ada proses \textit{combine}, $\Theta(1)$.
+\end{itemize}
+
+didapat persamaan berikut,
+
+\begin{align*}
+    T(n) =
+        \begin{cases}
+            \Theta(1),              & \text{if } n = 1 \\
+            T(n - 1) + \Theta(n)    & \text{if } n > 1                
+        \end{cases}
+\end{align*}
+
+\Problem Selesaikan persamaan rekurensi $T(n)$ dengan metode substitusi untuk mendapatkan
+kompleksitas waktu asimptotiknya dalam Big-$O$, Big-$\Omega$, dan Big-$\Theta$.
+
+\TheSolution
+
+\begin{align*}
+    T(n) & = T(n - 1) + n \\
+         & = [T(n - 2) + n] + n \\
+         & = [T(n - 3) + n] + n + n \\
+         & = [T(n - 4) + n] + n + n \\
+         & = T(n - i) + in \\
+\end{align*}
+
+Dari persamaan diatas didapat $i = n$, maka
+
+\begin{align*}
+    T(n) & = T(1) + n \cdot n \\
+         & = n^2 + 1
+         & = O(n^2)
+\end{align*}
+
+
+\Problem Lakukan implementasi koding program untuk algoritma insertion sort dengan menggunakan bahasa C++.
+
+\TheSolution Implementasi dari \textit{Recursive Insertion Sort} dapat dilihat di \href{https://github.com/okka-riswana/AnalgoKu/blob/8db63a0d830d90c0f0fba2e2cc53272ffe58b6e7/src/analgoku4/sorting.hpp#L157}{sini}. Berikut kutipannya,
+
+\begin{code}[cpp]{Recursive Insertion Sort}
+template <typename RandomAccessIterator, typename Compare>
+void recursive_insertion_sort(RandomAccessIterator first,
+                              RandomAccessIterator last,
+                              Compare comp) {
+  if (std::distance(first, last) > 0) {
+    recursive_insertion_sort(first, last - 1, comp);
+    auto key = *(last - 1);
+    auto p = last - 2;
+    for (; p >= first && key < *p; --p) {
+      std::iter_swap(p, p + 1);
+    }
+    *(p + 1) = key;
+  }
+}
+\end{code}

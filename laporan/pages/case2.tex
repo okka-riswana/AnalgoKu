@@ -1,0 +1,100 @@
+\section{Selection Sort}
+
+\Problem Tentukan $T(n)$ dari rekurensi (pengulangan) selection sort berdasarkan penentuan rekurensi divide \& conquer:
+
+\begin{align*}
+    T(n) =
+        \begin{cases}
+            \Theta(1),                      & \text{if } n \leq c \\
+            aT(\frac{n}{b}) + D(n) + C(n)   & \text{otherwise}
+        \end{cases}
+\end{align*}
+
+\TheSolution
+Diberikan,
+
+\begin{itemize}
+    \item \textbf{Divide}: untuk membagi data membutuhkan $\Theta(1)$.
+    \item \textbf{Conquer}: Setiap rekursi membutuhkan biaya $O(n)$ untuk mencari elemen yang dipilih untuk ditukar. $T(n - 1)$ dibutuhkan untuk menyelesaikan 1 \textit{sub-problem} dengan ukuran $n - 1$.
+    \item \textbf{Combine}: karena data hanya dibagi 1 maka tidak ada proses \textit{combine}, $\Theta(1)$.
+\end{itemize}
+
+didapat persamaan berikut,
+
+\begin{align*}
+    T(n) =
+        \begin{cases}
+            \Theta(1),              & \text{if } n = 1 \\
+            T(n - 1) + \Theta(n)    & \text{if } n > 1
+        \end{cases}
+\end{align*}
+
+\Problem Selesaikan persamaan rekurensi $T(n)$ dengan metode recursion-tree untuk mendapatkan
+kompleksitas waktu asimptotiknya dalam Big-$O$, Big-$\Omega$, dan Big-$\Theta$.
+
+\TheSolution Berikut adalah \textit{recurrence tree} dari \textit{selection sort},
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[level/.style={sibling distance=40mm/#1}]
+        \tikzstyle{every node}=[draw=none, minimum size=10mm]
+        \node (root) {$c(n)$} child {
+            node {$c(n - 1)$} child {
+                node {$c(n - 2)$} child {
+                    node {$c(n - 3)$} child {
+                       node {$\vdots$} child {
+                            node {$T(1)$}
+                       }
+                    }
+                }
+            }
+        };
+        
+        \path (root) ++(2cm,1cm)    node (h) {$h$};
+        \path (root             -| h)   node {$0$};
+        \path (root-1           -| h)   node {$1$};
+        \path (root-1-1         -| h)   node {$2$};
+        \path (root-1-1-1       -| h)   node {$3$};
+        \path (root-1-1-1-1     -| h)   node {$\vdots$};
+        \path (root-1-1-1-1-1   -| h)   node {$i$};
+        
+        \path (root) ++(4cm,1cm)    node (biaya) {\textbf{Biaya}};
+        \path (root             -| biaya)   node {$n$};
+        \path (root-1           -| biaya)   node {$n - 1$};
+        \path (root-1-1         -| biaya)   node {$n - 2$};
+        \path (root-1-1-1       -| biaya)   node {$n - 3$};
+        \path (root-1-1-1-1     -| biaya)   node {$\vdots$};
+        \path (root-1-1-1-1-1   -| biaya)   node {$1$};
+    \end{tikzpicture}
+    \caption{\textit{Recurrence Tree Selection Sort}}
+    \label{fig:selsorttree}
+\end{figure}
+
+Kompleksitas waktu nya adalah:
+
+\begin{align*}
+    T(n)    & = c(n) + c(n - 1) + c(n - 2) + c(n - 3) + \ldots  + c(1) \\
+            & = \sum_{i=0}^{n} i \\
+            & = \frac{n(n + 1)}{2} \\
+            & = O(n^2)
+\end{align*}
+
+
+\Problem Lakukan implementasi koding program untuk algoritma selection sort dengan menggunakan bahasa C++.
+
+\TheSolution Implementasi dari \textit{Recursive Selection Sort} dapat dilihat di \href{https://github.com/okka-riswana/AnalgoKu/blob/8db63a0d830d90c0f0fba2e2cc53272ffe58b6e7/src/analgoku4/sorting.hpp#L216}{sini}. Berikut kutipannya,
+
+\begin{code}[cpp]{Recursive Selection Sort}
+template <typename RandomAccessIterator, typename Compare>
+void recursive_selection_sort(RandomAccessIterator first,
+                              RandomAccessIterator last,
+                              Compare comp) {
+  if (first != last) {
+    auto temp = find_selection(first, last - 1, comp);
+    if (first != temp) {
+      std::iter_swap(first, temp);
+    }
+    recursive_selection_sort(first + 1, last, comp);
+  }
+}
+\end{code}

@@ -1,0 +1,59 @@
+\section{Bubble Sort}
+
+\Problem Tentukan $T(n)$ dari rekurensi (pengulangan) bubble sort berdasarkan penentuan rekurensi divide \& conquer:
+
+\begin{align*}
+    T(n) =
+        \begin{cases}
+            \Theta(1),                      & \text{if } n \leq c \\
+            aT(\frac{n}{b}) + D(n) + C(n)   & \text{otherwise}
+        \end{cases}
+\end{align*}
+
+\TheSolution
+Diberikan,
+
+\begin{itemize}
+    \item \textbf{Divide}: untuk membagi data membutuhkan $\Theta(1)$.
+    \item \textbf{Conquer}: Setiap rekursi membutuhkan biaya $O(n)$ untuk mencari elemen yang dipilih untuk ditukar. $T(n - 1)$ dibutuhkan untuk menyelesaikan 1 \textit{sub-problem} dengan ukuran $n - 1$.
+    \item \textbf{Combine}: karena data hanya dibagi 1 maka tidak ada proses \textit{combine}, $\Theta(1)$.
+\end{itemize}
+
+didapat persamaan berikut,
+
+\begin{align*}
+    T(n) =
+        \begin{cases}
+            \Theta(1),              & \text{if } n = 1 \\
+            T(n - 1) + \Theta(n)    & \text{if } n > 1                
+        \end{cases}
+\end{align*}
+
+\Problem Selesaikan persamaan rekurensi $T(n)$ dengan metode master untuk mendapatkan
+kompleksitas waktu asimptotiknya dalam Big-$O$, Big-$\Omega$, dan Big-$\Theta$.
+
+\TheSolution
+
+Tidak dapat dikerjakan melalui teorema master karena $b \leq 2$. Namun secara logika dapat diambil kompleksitas waktunya $O(n^2), \Omega(n^2), \Theta(n^2)$.
+
+
+\Problem Lakukan implementasi koding program untuk algoritma insertion sort dengan menggunakan bahasa C++.
+
+\TheSolution Implementasi dari \textit{Recursive Bubble Sort} dapat dilihat di \href{https://github.com/okka-riswana/AnalgoKu/blob/8db63a0d830d90c0f0fba2e2cc53272ffe58b6e7/src/analgoku4/sorting.hpp#L118}{sini}. Berikut kutipannya,
+
+\begin{code}[cpp]{Recursive Insertion Sort}
+template <typename RandomAccessIterator, typename Compare>
+void recursive_bubble_sort(RandomAccessIterator first,
+                           RandomAccessIterator last,
+                           Compare comp) {
+  if (std::distance(first, last) > 1) {
+    for (auto left = first, right = first + 1; right != last;
+         ++left, ++right) {
+      if (comp(*right, *left)) {
+        std::iter_swap(left, right);
+      }
+    }
+    recursive_bubble_sort(first, --last, comp);
+  }
+}
+\end{code}

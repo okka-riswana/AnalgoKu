@@ -1,0 +1,35 @@
+\section{Merge Sort}
+
+\Problem Buat program Merge-Sort dengan bahasa C++.
+
+\TheSolution Implementasi dapat dilihat di \href{https://github.com/okka-riswana/AnalgoKu/blob/8db63a0d830d90c0f0fba2e2cc53272ffe58b6e7/src/analgoku4/sorting.hpp#L56}{sini}. Berikut adalah sedikit kutipannya,
+
+\begin{code}[cpp]{Merge Sort}
+template <typename RandomAccessIterator1,
+          typename RandomAccessIterator2,
+          typename Compare>
+void merge_sort(RandomAccessIterator1 first1,
+                RandomAccessIterator1 last1,
+                RandomAccessIterator2 first2,
+                RandomAccessIterator2 last2,
+                Compare comp) {
+  const auto distance = std::distance(first1, last1);
+  if (distance < 2) {
+    return;
+  }
+  const auto middle1 = std::next(first1, distance >> 1);
+  const auto middle2 = std::next(first2, distance >> 1);
+  merge_sort(first2, middle2, first1, middle1, comp);
+  merge_sort(middle2, last2, middle1, last1, comp);
+  Sorting::merge(first2, middle2, middle2, last2, first1, comp);
+}
+\end{code}
+
+\Problem Kompleksitas waktu algoritma merge sort adalah $O(n \cdot log(n))$. Cari tahu kecepatan komputer anda dalam memproses program. Hitung berapa running time yang dibutuhkan apabila input untuk merge sort-nya adalah 20?
+
+\TheSolution Dari output program , didapat informasi sebagai berikut:
+\begin{code}{Output}
+Data Size: 20
+Result: Sorted
+Elapsed: 3367 nanoseconds
+\end{code}
