@@ -59,7 +59,7 @@ int main(const int argc, const char **argv) {
 
   std::ofstream outfile(output_file);
   std::ostream_iterator<uint64_t> output_stream(
-      output_file.empty() ? std::cout : outfile, "\n");
+      output_flag ? outfile : std::cout, "\n");
 
   std::function<void(std::vector<uint64_t>::iterator,
                      std::vector<uint64_t>::iterator)>
@@ -87,7 +87,7 @@ int main(const int argc, const char **argv) {
 
   if (output_flag || !quiet_flag) {
     std::copy(data.begin(), data.end(), output_stream);
-    std::cout << '\n';
+    std::cout << "\n";
   }
 
   std::cout
