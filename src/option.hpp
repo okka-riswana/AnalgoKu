@@ -1,5 +1,4 @@
-#ifndef OPTION_H
-#define OPTION_H
+#pragma once
 
 #include <algorithm>
 #include <string>
@@ -31,5 +30,3 @@ private:
 };
 
 } // namespace Analgo
-
-#endif

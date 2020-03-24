@@ -1,5 +1,3 @@
-#ifndef MERGE_SORT_HPP
-#define MERGE_SORT_HPP
 #pragma once
 
 #include <algorithm>
@@ -246,5 +244,3 @@ void recursive_selection_sort(RandomAccessIterator first,
 } // namespace Sorting
 
 } // namespace Analgo
-
-#endif

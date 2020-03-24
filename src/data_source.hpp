@@ -1,5 +1,4 @@
-#ifndef DATA_SOURCE_HPP
-#define DATA_SOURCE_HPP
+#pragma once
 
 #include <algorithm>
 #include <fstream>
@@ -29,5 +28,3 @@ std::vector<uint64_t> generate_random_uint(const size_t &size) {
 }
 
 } // namespace Analgo
-
-#endif
