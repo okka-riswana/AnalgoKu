@@ -2,7 +2,7 @@
 #include <cstdio>
 
 /**
- * "C" implementation for Tromino tiling problem.
+ * "C" implementation of Tromino tiling problem.
  *
  * maaf acak-acakan
  */
