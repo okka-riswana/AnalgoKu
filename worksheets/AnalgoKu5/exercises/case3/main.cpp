@@ -21,3 +21,4 @@ int main(int argc, char const **argv) {
   } while (board_size);
 
   return EXIT_SUCCESS;
+}
